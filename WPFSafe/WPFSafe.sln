@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2035
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFSafe", "WPFSafe\WPFSafe.csproj", "{A73A0455-C801-4CC9-B4CE-879E44EF74F1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A73A0455-C801-4CC9-B4CE-879E44EF74F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A73A0455-C801-4CC9-B4CE-879E44EF74F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A73A0455-C801-4CC9-B4CE-879E44EF74F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A73A0455-C801-4CC9-B4CE-879E44EF74F1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {85D3F95A-1A2A-4C0B-98A5-D9754827E1DE}
+	EndGlobalSection
+EndGlobal
