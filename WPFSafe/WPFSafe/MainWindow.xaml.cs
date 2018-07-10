@@ -7,11 +7,13 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Data;
 using System.Data.SQLite;
 
 namespace WPFSafe
@@ -28,9 +30,11 @@ namespace WPFSafe
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            Database sqliteCon = new Database();
+
             try
             {
-                Database sqliteCon = new Database();
+                //----Load customer names into listbox----
                 sqliteCon.OpenConnection();
                 string listcustQuery = "SELECT * FROM customers";
                 SQLiteCommand listcustCommand = new SQLiteCommand(listcustQuery, sqliteCon.myConnection);
@@ -44,18 +48,22 @@ namespace WPFSafe
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                System.Windows.MessageBox.Show(ex.Message);
             }
             
         }
 
         private void CustomerListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            Database sqliteCon = new Database();
+            string customerID = "SELECT cust_id from customers where name='" + CustomerListBox.SelectedItem + "' ";
+            int custID;
             try
             {
-                Database sqliteCon = new Database();
+                //----Load customer data into Data tab's textbox based on listbox selection----
                 sqliteCon.OpenConnection();
                 string listcustQuery = "SELECT * FROM customers where name='" + CustomerListBox.SelectedItem + "' ";
+
                 SQLiteCommand listcustCommand = new SQLiteCommand(listcustQuery, sqliteCon.myConnection);
                 SQLiteDataReader dr = listcustCommand.ExecuteReader();
                 while (dr.Read())
@@ -63,12 +71,28 @@ namespace WPFSafe
                     string data = dr.GetString(2);
                     DataTextBox.Text = data;
                 }
+                
+                SQLiteCommand custIDCommand = new SQLiteCommand(customerID, sqliteCon.myConnection);
+                SQLiteDataReader custDR = custIDCommand.ExecuteReader();
+                while (custDR.Read())
+                {
+                    //----Load customer's misc data into Misc tab's datagrid based on listbox selection----
+                    custID = custDR.GetInt32(0);
+                    SQLiteCommand cmdMiscData = new SQLiteCommand(" SELECT misc_name,misc_value FROM misc WHERE customer_id='" + custID + "' ", sqliteCon.myConnection);
+                    SQLiteDataAdapter dataAdp = new SQLiteDataAdapter(cmdMiscData);
+                    DataTable dt = new DataTable("misc");
+                    dataAdp.Fill(dt);
+                    MiscDataGrid.ItemsSource = dt.DefaultView;
+                    dataAdp.Update(dt);
+                }
+
                 sqliteCon.CloseConnection();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                System.Windows.MessageBox.Show(ex.Message);
             }
         }
+
     }
 }

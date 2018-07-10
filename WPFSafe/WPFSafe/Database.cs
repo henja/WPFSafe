@@ -20,7 +20,7 @@ namespace WPFSafe
             myConnection = new SQLiteConnection("Data Source=C:\\Users\\jason\\Source\\dbs\\database.sqlite3");
 
 
-            /*below uses relative path
+            /*test: below uses relative path
             string relativePath = @"Database\Database.sqlite";
             var parentdir = Path.GetDirectoryName(Application.StartupPath);
             string myString = parentdir.Remove(parentdir.Length - 34, 34);

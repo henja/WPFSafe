@@ -49,9 +49,14 @@
                     <TextBox Name="DataTextBox" TextWrapping="Wrap" AcceptsReturn="True" Grid.Column="1" Height="Auto" Width="Auto" Margin="2,0,2,2" />
                     </ScrollViewer>
                 </TabItem>
+                
                 <TabItem Header="Misc" >
                     <!--"<Grid Background="#FFE5E5E5"/> -->
-                    <TextBox TextWrapping="Wrap" AcceptsReturn="True" Grid.Column="1" Height="Auto" Width="Auto" Margin="2,0,2,2" />
+                    <ScrollViewer  HorizontalScrollBarVisibility="Auto">
+                    <!--<TextBox Name="MiscTextBox" TextWrapping="Wrap" AcceptsReturn="True" Grid.Column="1" Height="Auto" Width="Auto" Margin="2,0,2,2" />-->
+                    <DataGrid Name="MiscDataGrid" AutoGenerateColumns="True" />
+                     
+                    </ScrollViewer>
                 </TabItem>
             </TabControl>
 
