@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPFSafe"
+        Loaded="Window_Loaded"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <DockPanel>
@@ -33,7 +34,7 @@
                 <TextBox Text="customer search box" Margin="5,0,0,0"/>
             </StackPanel>
             
-            <ListBox Grid.Column="0" Background="AliceBlue" Height="Auto" Margin="5,39,0,5" Grid.Row="1"/>
+            <ListBox Name="CustomerListBox" Grid.Column="0" Background="AliceBlue" Height="Auto" Margin="5,39,0,5" Grid.Row="1" SelectionChanged="CustomerListBox_SelectionChanged"/>
             
             <StackPanel Grid.Column="1" Grid.Row="0">
                 <TextBox Text="data search box" Margin="5,0,5,0"></TextBox>
@@ -44,7 +45,9 @@
 
                 <TabItem Header="Data" >
                     <!--"<Grid Background="#FFE5E5E5"/> -->
-                    <TextBox TextWrapping="Wrap" AcceptsReturn="True" Grid.Column="1" Height="Auto" Width="Auto" Margin="2,0,2,2" />
+                    <ScrollViewer  HorizontalScrollBarVisibility="Auto">
+                    <TextBox Name="DataTextBox" TextWrapping="Wrap" AcceptsReturn="True" Grid.Column="1" Height="Auto" Width="Auto" Margin="2,0,2,2" />
+                    </ScrollViewer>
                 </TabItem>
                 <TabItem Header="Misc" >
                     <!--"<Grid Background="#FFE5E5E5"/> -->
