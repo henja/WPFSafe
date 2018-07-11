@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WPFSafe"
         Loaded="Window_Loaded"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Aasys Safe" Height="450" Width="800">
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_File">
@@ -31,15 +31,15 @@
             </Grid.RowDefinitions>
 
             <StackPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
-                <TextBlock Text="Customer" Margin="5,0,0,0" />
+                <TextBlock x:Name="customerDisplayName" Margin="5,0,0,0" />
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <TextBox Name="DataSearchField" Grid.Column="0" Text="data search..." Margin="5,0,50,0" Grid.ColumnSpan="2"/>
-                    <Button Name="DataSearchButton"  Grid.Column="1" Margin="42,0,0,0">
-                        <TextBlock><Bold>Search</Bold></TextBlock>
+                    <TextBox x:Name="searchTextBox" Grid.Column="0" Text="data search..." Margin="5,0,50,0" Grid.ColumnSpan="2"/>
+                    <Button x:Name="dataSearchButton"  Grid.Column="1" Margin="42,0,0,0" Click="dataSearchButton_Click">
+                        <TextBlock><Bold><Run Text="Search"/></Bold></TextBlock>
                     </Button>
                 </Grid>
             </StackPanel>
@@ -56,7 +56,7 @@
                 <TabItem Header="Data" >
                     <!--"<Grid Background="#FFE5E5E5"/> -->
                     <ScrollViewer  HorizontalScrollBarVisibility="Auto">
-                        <TextBox Name="DataTextBox" TextWrapping="Wrap" AcceptsReturn="True" Grid.Column="1" Height="Auto" Width="Auto" Margin="2,0,2,2" />
+                        <RichTextBox Background="Beige" Name="contentTextBox" AcceptsReturn="True" Grid.Column="1" Height="Auto" Width="Auto" />
                     </ScrollViewer>
                 </TabItem>
 

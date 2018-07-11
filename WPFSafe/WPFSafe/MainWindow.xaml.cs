@@ -13,7 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Text;
+//using System.Text;
 using System.IO;
 using System.Data;
 using System.Data.SQLite;
@@ -63,19 +63,25 @@ namespace WPFSafe
             int custID;
             try
             {
+                
                 //----Load customer data into Data tab's textbox based on listbox selection----
                 sqliteCon.OpenConnection();
                 string listcustQuery = "SELECT * FROM customers where name='" + CustomerListBox.SelectedItem + "' ";
-
+                customerDisplayName.Text = (string)CustomerListBox.SelectedItem;
                 SQLiteCommand listcustCommand = new SQLiteCommand(listcustQuery, sqliteCon.myConnection);
                 SQLiteDataReader dr = listcustCommand.ExecuteReader();
+                string data = "";
+
+                contentTextBox.SelectAll();
 
                 while (dr.Read())
                 {
-                    string data = dr.GetString(2);
-                    DataTextBox.Text = data;
+                    data = dr.GetString(2);
+                    contentTextBox.AppendText(data);
                 }
-                
+
+                //contentTextBox.Text = data;
+                //contentTextBox.AppendText(data);
                 SQLiteCommand custIDCommand = new SQLiteCommand(customerID, sqliteCon.myConnection);
                 SQLiteDataReader custDR = custIDCommand.ExecuteReader();
 
@@ -98,6 +104,19 @@ namespace WPFSafe
                 System.Windows.MessageBox.Show(ex.Message);
             }
         }
+        
+        private void dataSearchButton_Click(object sender, RoutedEventArgs e)
+        {/*
+            int index = 0;
+            String temp = dataTextBox.Text;
+            dataTextBox.Text = "";
+            dataTextBox.Text = temp;
 
+            while (index < dataTextBox.Text.LastIndexOf(dataSearchField.Text))
+            {
+                dataTextBox
+
+            }*/
+        }
     }
 }
