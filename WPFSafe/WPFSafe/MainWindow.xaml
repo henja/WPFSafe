@@ -21,41 +21,51 @@
         <!--<StackPanel Margin="5">-->
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="91*" />
-                <ColumnDefinition Width="300*" />
+                <ColumnDefinition Width="163.333" />
+                <ColumnDefinition Width="11.667"/>
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="20" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <StackPanel Grid.Column="0" Grid.Row="1">
+            <StackPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
                 <TextBlock Text="Customer" Margin="5,0,0,0" />
-                <TextBox Text="customer search box" Margin="5,0,0,0"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <TextBox Name="DataSearchField" Grid.Column="0" Text="data search..." Margin="5,0,50,0" Grid.ColumnSpan="2"/>
+                    <Button Name="DataSearchButton"  Grid.Column="1" Margin="42,0,0,0">
+                        <TextBlock><Bold>Search</Bold></TextBlock>
+                    </Button>
+                </Grid>
             </StackPanel>
-            
-            <ListBox Name="CustomerListBox" Grid.Column="0" Background="AliceBlue" Height="Auto" Margin="5,39,0,5" Grid.Row="1" SelectionChanged="CustomerListBox_SelectionChanged"/>
-            
-            <StackPanel Grid.Column="1" Grid.Row="0">
-                <TextBox Text="data search box" Margin="5,0,5,0"></TextBox>
+
+            <ListBox Name="CustomerListBox" Grid.Column="0" Background="AliceBlue" Height="Auto" Margin="5,39,0,5" Grid.Row="1" SelectionChanged="CustomerListBox_SelectionChanged" Grid.ColumnSpan="2"/>
+
+            <StackPanel Grid.Column="2" Grid.Row="0">
+                <!--<TextBox Text="data search box" Margin="5,0,5,0"></TextBox>-->
             </StackPanel>
-            
-            
-            <TabControl Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="auto" Width="auto" Margin="5,0,0,0">
+
+
+            <TabControl Grid.Column="2" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="auto" Width="auto" Margin="5,0,0,0">
 
                 <TabItem Header="Data" >
                     <!--"<Grid Background="#FFE5E5E5"/> -->
                     <ScrollViewer  HorizontalScrollBarVisibility="Auto">
-                    <TextBox Name="DataTextBox" TextWrapping="Wrap" AcceptsReturn="True" Grid.Column="1" Height="Auto" Width="Auto" Margin="2,0,2,2" />
+                        <TextBox Name="DataTextBox" TextWrapping="Wrap" AcceptsReturn="True" Grid.Column="1" Height="Auto" Width="Auto" Margin="2,0,2,2" />
                     </ScrollViewer>
                 </TabItem>
-                
+
                 <TabItem Header="Misc" >
                     <!--"<Grid Background="#FFE5E5E5"/> -->
                     <ScrollViewer  HorizontalScrollBarVisibility="Auto">
-                    <!--<TextBox Name="MiscTextBox" TextWrapping="Wrap" AcceptsReturn="True" Grid.Column="1" Height="Auto" Width="Auto" Margin="2,0,2,2" />-->
-                    <DataGrid Name="MiscDataGrid" AutoGenerateColumns="True" />
-                     
+                        <!--<TextBox Name="MiscTextBox" TextWrapping="Wrap" AcceptsReturn="True" Grid.Column="1" Height="Auto" Width="Auto" Margin="2,0,2,2" />-->
+                        <DataGrid Name="MiscDataGrid" AutoGenerateColumns="True" />
+
                     </ScrollViewer>
                 </TabItem>
             </TabControl>

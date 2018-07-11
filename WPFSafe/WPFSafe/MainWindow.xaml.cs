@@ -13,8 +13,11 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Text;
+using System.IO;
 using System.Data;
 using System.Data.SQLite;
+
 
 namespace WPFSafe
 {
@@ -66,6 +69,7 @@ namespace WPFSafe
 
                 SQLiteCommand listcustCommand = new SQLiteCommand(listcustQuery, sqliteCon.myConnection);
                 SQLiteDataReader dr = listcustCommand.ExecuteReader();
+
                 while (dr.Read())
                 {
                     string data = dr.GetString(2);
@@ -74,6 +78,7 @@ namespace WPFSafe
                 
                 SQLiteCommand custIDCommand = new SQLiteCommand(customerID, sqliteCon.myConnection);
                 SQLiteDataReader custDR = custIDCommand.ExecuteReader();
+
                 while (custDR.Read())
                 {
                     //----Load customer's misc data into Misc tab's datagrid based on listbox selection----
