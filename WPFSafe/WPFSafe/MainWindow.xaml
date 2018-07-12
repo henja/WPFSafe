@@ -31,14 +31,14 @@
             </Grid.RowDefinitions>
 
             <StackPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
-                <TextBlock x:Name="customerDisplayName" Margin="5,0,0,0" />
+                <TextBlock Name="customerDisplayName" Margin="5,0,0,0" />
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <TextBox x:Name="searchTextBox" Grid.Column="0" Text="data search..." Margin="5,0,50,0" Grid.ColumnSpan="2"/>
-                    <Button x:Name="dataSearchButton"  Grid.Column="1" Margin="42,0,0,0" Click="dataSearchButton_Click">
+                    <TextBox Name="searchTextBox" Grid.Column="0" Text="data search..." Margin="5,0,50,0" Grid.ColumnSpan="2"/>
+                    <Button Name="dataSearchButton"  Grid.Column="1" Margin="42,0,0,0" Click="dataSearchButton_Click">
                         <TextBlock><Bold><Run Text="Search"/></Bold></TextBlock>
                     </Button>
                 </Grid>
@@ -50,13 +50,13 @@
                 <!--<TextBox Text="data search box" Margin="5,0,5,0"></TextBox>-->
             </StackPanel>
 
-
             <TabControl Grid.Column="2" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="auto" Width="auto" Margin="5,0,0,0">
-
                 <TabItem Header="Data" >
                     <!--"<Grid Background="#FFE5E5E5"/> -->
                     <ScrollViewer  HorizontalScrollBarVisibility="Auto">
-                        <RichTextBox Background="Beige" Name="contentTextBox" AcceptsReturn="True" Grid.Column="1" Height="Auto" Width="Auto" />
+                        <RichTextBox Name="contentTextBox" AcceptsReturn="True" Grid.Column="1" Height="Auto" Width="Auto">
+                            <FlowDocument Name="contentFlowDoc" PageWidth="{Binding ElementName=contentTextBox, Path=ActualWidth}" />
+                        </RichTextBox>
                     </ScrollViewer>
                 </TabItem>
 
@@ -65,13 +65,10 @@
                     <ScrollViewer  HorizontalScrollBarVisibility="Auto">
                         <!--<TextBox Name="MiscTextBox" TextWrapping="Wrap" AcceptsReturn="True" Grid.Column="1" Height="Auto" Width="Auto" Margin="2,0,2,2" />-->
                         <DataGrid Name="MiscDataGrid" AutoGenerateColumns="True" />
-
                     </ScrollViewer>
+                    
                 </TabItem>
             </TabControl>
-
         </Grid>
-
-
     </DockPanel>
 </Window>

@@ -59,35 +59,37 @@ namespace WPFSafe
         private void CustomerListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Database sqliteCon = new Database();
+
+            string listcustQuery = "SELECT * FROM customers where name='" + CustomerListBox.SelectedItem + "' ";
             string customerID = "SELECT cust_id from customers where name='" + CustomerListBox.SelectedItem + "' ";
             int custID;
+
+            customerDisplayName.Text = (string)CustomerListBox.SelectedItem;
+
             try
             {
-                
-                //----Load customer data into Data tab's textbox based on listbox selection----
                 sqliteCon.OpenConnection();
-                string listcustQuery = "SELECT * FROM customers where name='" + CustomerListBox.SelectedItem + "' ";
-                customerDisplayName.Text = (string)CustomerListBox.SelectedItem;
+                
                 SQLiteCommand listcustCommand = new SQLiteCommand(listcustQuery, sqliteCon.myConnection);
                 SQLiteDataReader dr = listcustCommand.ExecuteReader();
-                string data = "";
 
+                //----Clear data text box before reading in new data
                 contentTextBox.SelectAll();
+                contentTextBox.Selection.Text = "";
 
+                //----Load customer data into Data tab's textbox based on listbox selection----
                 while (dr.Read())
                 {
-                    data = dr.GetString(2);
+                    string data = dr.GetString(2);
                     contentTextBox.AppendText(data);
                 }
 
-                //contentTextBox.Text = data;
-                //contentTextBox.AppendText(data);
                 SQLiteCommand custIDCommand = new SQLiteCommand(customerID, sqliteCon.myConnection);
                 SQLiteDataReader custDR = custIDCommand.ExecuteReader();
 
+                //----Load customer's misc data into Misc tab's datagrid based on listbox selection----
                 while (custDR.Read())
                 {
-                    //----Load customer's misc data into Misc tab's datagrid based on listbox selection----
                     custID = custDR.GetInt32(0);
                     SQLiteCommand cmdMiscData = new SQLiteCommand(" SELECT misc_name,misc_value FROM misc WHERE customer_id='" + custID + "' ", sqliteCon.myConnection);
                     SQLiteDataAdapter dataAdp = new SQLiteDataAdapter(cmdMiscData);
