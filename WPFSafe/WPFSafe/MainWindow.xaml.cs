@@ -1,23 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-//using System.Text;
 using System.IO;
 using System.Data;
 using System.Data.SQLite;
-
+using System.Text.RegularExpressions;
 
 namespace WPFSafe
 {
@@ -53,7 +43,7 @@ namespace WPFSafe
             {
                 System.Windows.MessageBox.Show(ex.Message);
             }
-            
+
         }
 
         private void CustomerListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -103,22 +93,137 @@ namespace WPFSafe
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message);
             }
         }
-        
-        private void dataSearchButton_Click(object sender, RoutedEventArgs e)
-        {/*
-            int index = 0;
-            String temp = dataTextBox.Text;
-            dataTextBox.Text = "";
-            dataTextBox.Text = temp;
 
-            while (index < dataTextBox.Text.LastIndexOf(dataSearchField.Text))
+        //-----searches the Data text box for the string passed into the search box. highlights the matches.-----
+        private void DataSearchButton_Click(object sender, RoutedEventArgs e)
+        {
+
+            contentTextBox.SelectAll();
+            contentTextBox.Selection.ApplyPropertyValue(TextElement.ForegroundProperty, new SolidColorBrush(Colors.Black));
+            contentTextBox.Selection.ApplyPropertyValue(TextElement.BackgroundProperty, new SolidColorBrush(Colors.Transparent));
+            contentTextBox.Selection.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Normal);
+            Regex reg = new Regex(searchBox.Text.ToString(), RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+            var start = contentTextBox.Document.ContentStart;
+            var start2 = MiscDataGrid.Items;
+            while (start != null && start.CompareTo(contentTextBox.Document.ContentEnd) < 0)
             {
-                dataTextBox
+                if (start.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.Text)
+                {
+                    var match = reg.Match(start.GetTextInRun(LogicalDirection.Forward));
 
-            }*/
+                    var textrange = new TextRange(start.GetPositionAtOffset(match.Index, LogicalDirection.Forward), start.GetPositionAtOffset(match.Index + match.Length, LogicalDirection.Backward));
+                    textrange.ApplyPropertyValue(TextElement.ForegroundProperty, new SolidColorBrush(Colors.Blue));
+                    textrange.ApplyPropertyValue(TextElement.BackgroundProperty, new SolidColorBrush(Colors.Yellow));
+                    textrange.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Bold);
+                    start = textrange.End;
+                }
+                start = start.GetNextContextPosition(LogicalDirection.Forward);
+            }
         }
+
+        //-----calls search button click event when pressing Enter in the search box-----
+        private void SearchBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                DataSearchButton_Click(sender, e);
+            }
+        }
+
+
+        /*
+        private void dataSearchButton_Click(object sender, RoutedEventArgs e)
+        {
+            contentTextBox.SelectAll();
+            contentTextBox.Selection.ApplyPropertyValue(TextElement.ForegroundProperty, new SolidColorBrush(Colors.Black));
+            contentTextBox.Selection.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Normal);
+
+
+            Regex reg = new Regex(searchBox.Text.Trim(), RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            TextPointer position = contentTextBox.Document.ContentStart;
+            List<TextRange> ranges = new List<TextRange>();
+            while (position != null)
+            {
+                if (position.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.Text)
+                {
+                    string text = position.GetTextInRun(LogicalDirection.Forward);
+                    var matchs = reg.Matches(text);
+
+                    foreach (Match match in matchs)
+                    {
+
+                        TextPointer start = position.GetPositionAtOffset(match.Index);
+                        TextPointer end = start.GetPositionAtOffset(searchBox.Text.Trim().Length);
+
+                        TextRange textrange = new TextRange(start, end);
+                        ranges.Add(textrange);
+                    }
+                }
+                position = position.GetNextContextPosition(LogicalDirection.Forward);
+            }
+
+
+            foreach (TextRange range in ranges)
+            {
+                range.ApplyPropertyValue(TextElement.ForegroundProperty, new SolidColorBrush(Colors.Red));
+                range.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Bold);
+            }
+
+
+        }
+        */
+
+
+        /*
+    private void dataSearchButton_Click(object sender, RoutedEventArgs e)
+    {
+        DoSearch(contentTextBox, searchBox.Text, true);
+    }
+
+        public bool DoSearch(System.Windows.Controls.RichTextBox richTextBox, string searchText, bool searchNext)
+    {
+        TextRange searchRange;
+
+        // Get the range to search
+        if (searchNext)
+            searchRange = new TextRange(
+                richTextBox.Selection.Start.GetPositionAtOffset(1),
+                richTextBox.Document.ContentEnd);
+        else
+            searchRange = new TextRange(
+                richTextBox.Document.ContentStart,
+                richTextBox.Document.ContentEnd);
+
+        // Do the search
+        TextRange foundRange = FindTextInRange(searchRange, searchText);
+        if (foundRange == null)
+            return false;
+
+        // Select the found range
+        contentTextBox.Selection.Select(foundRange.Start, foundRange.End);
+        return true;
+    }
+
+    public TextRange FindTextInRange(TextRange searchRange, string searchText)
+    {
+        // Search the text with IndexOf
+        int offset = searchRange.Text.IndexOf(searchText);
+        if (offset < 0)
+            return null;  // Not found
+
+        // Try to select the text as a contiguous range
+        for (TextPointer start = searchRange.Start.GetPositionAtOffset(offset); start != searchRange.End; start = start.GetPositionAtOffset(1))
+        {
+            TextRange result = new TextRange(start, start.GetPositionAtOffset(searchText.Length));
+            if (result.Text == searchText)
+                return result;
+        }
+        return null;
+    }
+    */
     }
 }

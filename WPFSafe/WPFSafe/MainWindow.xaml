@@ -34,11 +34,16 @@
                 <TextBlock Name="customerDisplayName" Margin="5,0,0,0" />
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
+                        <ColumnDefinition Width="29*" />
+                        <ColumnDefinition Width="59*"/>
+                        <ColumnDefinition Width="87*" />
                     </Grid.ColumnDefinitions>
-                    <TextBox Name="searchTextBox" Grid.Column="0" Text="data search..." Margin="5,0,50,0" Grid.ColumnSpan="2"/>
-                    <Button Name="dataSearchButton"  Grid.Column="1" Margin="42,0,0,0" Click="dataSearchButton_Click">
+                    <TextBox Name="searchBox" Grid.Column="0" Margin="5,0,50,0" Grid.ColumnSpan="3" KeyDown="SearchBox_KeyDown">
+                        <!--<TextBox.InputBindings>
+                            <KeyBinding Key="Return" Command="{Binding dataSearchButton_Click}" CommandTarget="{Binding ElementName=dataSearchButton, Mode=OneWay}"></KeyBinding>
+                        </TextBox.InputBindings>-->
+                    </TextBox>
+                    <Button Name="dataSearchButton"  Grid.Column="2" Margin="42,0,0,0" Click="DataSearchButton_Click">
                         <TextBlock><Bold><Run Text="Search"/></Bold></TextBlock>
                     </Button>
                 </Grid>
@@ -66,7 +71,7 @@
                         <!--<TextBox Name="MiscTextBox" TextWrapping="Wrap" AcceptsReturn="True" Grid.Column="1" Height="Auto" Width="Auto" Margin="2,0,2,2" />-->
                         <DataGrid Name="MiscDataGrid" AutoGenerateColumns="True" />
                     </ScrollViewer>
-                    
+
                 </TabItem>
             </TabControl>
         </Grid>
