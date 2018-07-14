@@ -41,7 +41,7 @@ namespace WPFSafe
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message);
             }
 
         }
@@ -66,14 +66,15 @@ namespace WPFSafe
                 //----Clear data text box before reading in new data
                 contentTextBox.SelectAll();
                 contentTextBox.Selection.Text = "";
-
+                string data = "";
                 //----Load customer data into Data tab's textbox based on listbox selection----
                 while (dr.Read())
                 {
-                    string data = dr.GetString(2);
+                    data = dr.GetString(2);
                     contentTextBox.AppendText(data);
                 }
 
+                Console.WriteLine(data);
                 SQLiteCommand custIDCommand = new SQLiteCommand(customerID, sqliteCon.myConnection);
                 SQLiteDataReader custDR = custIDCommand.ExecuteReader();
 
@@ -128,6 +129,14 @@ namespace WPFSafe
             SearchCount.Text = "Matches found: " + matchCount;
         }
 
+
+        private void CustomerListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            string customerName = (string) CustomerListBox.SelectedItem;
+            DataEditWindow nw = new DataEditWindow(customerName);
+            nw.Show();
+        }
+
         //-----calls search button click event when pressing Enter in the search box-----
         /*
         private void SearchBox_KeyDown(object sender, KeyEventArgs e)
@@ -138,6 +147,19 @@ namespace WPFSafe
             }
         }
         */
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         /*
         private void dataSearchButton_Click(object sender, RoutedEventArgs e)
