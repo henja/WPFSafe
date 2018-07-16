@@ -131,20 +131,17 @@ namespace WPFSafe
         //-----loads the editing window after double clicking on a listbox selection-----
         private void CustomerListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            string customerData = StringFromRichTextBox(contentTextBox);
-            string customerName = (string)CustomerListBox.SelectedItem;
-            DataEditWindow nw = new DataEditWindow(customerData, customerName);
-            nw.Show();
+            bool isOpen = false;
+            if (isOpen == false)
+            {
+                string customerData = StringFromRichTextBox(contentTextBox);
+                string customerName = (string)CustomerListBox.SelectedItem;
+                DataEditWindow nw = new DataEditWindow(customerData, customerName);
+                nw.Show();
+                isOpen = true;
+            }
         }
 
-        /*
-        private void CustomerListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            string customerName = (string)CustomerListBox.SelectedItem;
-            DataEditWindow nw = new DataEditWindow(customerName);
-            nw.Show();
-        }
-        */
 
         public string StringFromRichTextBox(RichTextBox rtb)
         {
@@ -154,6 +151,8 @@ namespace WPFSafe
                 );
             return textRange.Text;
         }
+
+
         //-----calls search button click event when pressing Enter in the search box-----
         /*
         private void SearchBox_KeyDown(object sender, KeyEventArgs e)

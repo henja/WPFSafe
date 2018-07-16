@@ -60,20 +60,28 @@ namespace WPFSafe
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            StringFromRichTextBox(contentTextBox);
+            string data = StringFromRichTextBox(contentTextBox);
             Database con = new Database();
 
-            try
             {
-                SQLiteCommand cmd = new SQLiteCommand();
-                cmd.CommandText = "Update "
+                try
+                {
+                    con.OpenConnection();
+                    string query = "UPDATE customers SET data ='" + data + "' WHERE name='" + myString + "' ";
+                    SQLiteCommand cmd = new SQLiteCommand(query, con.myConnection);
+                    cmd.ExecuteNonQuery();
+                    con.CloseConnection();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+            Close();
 
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            MessageBox.Show("This is a test");
         }
+
 
         public string StringFromRichTextBox(RichTextBox rtb)
         {
