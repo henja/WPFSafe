@@ -19,16 +19,6 @@ namespace WPFSafe
         {
             myConnection = new SQLiteConnection("Data Source=C:\\Users\\jason\\Source\\dbs\\database.sqlite3");
 
-
-            /*test: below uses relative path
-            string relativePath = @"Database\Database.sqlite";
-            var parentdir = Path.GetDirectoryName(Application.StartupPath);
-            string myString = parentdir.Remove(parentdir.Length - 34, 34);
-            string absolutePath = Path.Combine(myString, relativePath);
-            string connectionString = string.Format("Data Source={0};Version=3;Pooling=True;Max Pool Size=100;", absolutePath);
-            myConnection = new SQLiteConnection(connectionString);
-            myConnection.Open();
-            */
         }
 
         public void OpenConnection()

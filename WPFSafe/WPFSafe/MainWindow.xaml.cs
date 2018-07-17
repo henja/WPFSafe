@@ -24,7 +24,6 @@ namespace WPFSafe
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             Database sqliteCon = new Database();
-
             try
             {
                 //----Load customer names into listbox----
@@ -58,8 +57,8 @@ namespace WPFSafe
 
             try
             {
+                //----Open db connection----
                 sqliteCon.OpenConnection();
-
                 SQLiteCommand listcustCommand = new SQLiteCommand(listcustQuery, sqliteCon.myConnection);
                 SQLiteDataReader dr = listcustCommand.ExecuteReader();
 
@@ -68,16 +67,16 @@ namespace WPFSafe
                 contentTextBox.Selection.Text = "";
                 string data = "";
                 //----Load customer data into Data tab's textbox based on listbox selection----
+                
                 while (dr.Read())
                 {
                     data = dr.GetString(2);
                     contentTextBox.AppendText(data);
                 }
 
+                //----Load customer's misc data into Misc tab's datagrid based on listbox selection----
                 SQLiteCommand custIDCommand = new SQLiteCommand(customerID, sqliteCon.myConnection);
                 SQLiteDataReader custDR = custIDCommand.ExecuteReader();
-
-                //----Load customer's misc data into Misc tab's datagrid based on listbox selection----
                 while (custDR.Read())
                 {
                     custID = custDR.GetInt32(0);
@@ -88,7 +87,7 @@ namespace WPFSafe
                     MiscDataGrid.ItemsSource = dt.DefaultView;
                     dataAdp.Update(dt);
                 }
-
+                //----Close db connection----
                 sqliteCon.CloseConnection();
             }
             catch (Exception ex)
@@ -143,6 +142,13 @@ namespace WPFSafe
         }
 
 
+        public void UpdateFrom_DataEditWindow(string data)
+        {
+            contentTextBox.SelectAll();
+            contentTextBox.Selection.Text = "";
+            contentTextBox.AppendText(data);
+        }
+
         public string StringFromRichTextBox(RichTextBox rtb)
         {
             TextRange textRange = new TextRange(
@@ -163,17 +169,6 @@ namespace WPFSafe
             }
         }
         */
-
-
-
-
-
-
-
-
-
-
-
 
 
 

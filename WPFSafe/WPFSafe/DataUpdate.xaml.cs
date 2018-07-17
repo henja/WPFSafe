@@ -5,7 +5,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Data;
 using System.Data.SQLite;
-
+using System.Linq;
 
 namespace WPFSafe
 {
@@ -14,13 +14,15 @@ namespace WPFSafe
     /// </summary>
     public partial class DataEditWindow : Window
     {
-        private string myString;
+        private string custName;
 
         public DataEditWindow(string customerData, string customerName)
         {
             InitializeComponent();
             contentTextBox.AppendText(customerData);
-            this.myString = customerName;
+            custName = customerName;
+
+            this.Closed += new EventHandler(DataEditWindow_Closed);
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -28,7 +30,7 @@ namespace WPFSafe
 
             Database sqliteCon = new Database();
             //string dataQuery = "Select * FROM customers where name='" + myString + "' ";
-            string customerID = "SELECT cust_id from customers where name='" + myString + "' ";
+            string customerID = "SELECT cust_id from customers where name='" + custName + "' ";
             int custID;
 
             try
@@ -68,7 +70,7 @@ namespace WPFSafe
                 {
                     
                     SQLiteCommand cmd = new SQLiteCommand(con.myConnection);
-                    cmd.CommandText = "UPDATE customers SET data = @data WHERE name='" + myString + "' ";
+                    cmd.CommandText = "UPDATE customers SET data = @data WHERE name='" + custName + "' ";
                     cmd.Parameters.AddWithValue("@data", data);
                     con.OpenConnection();
                     cmd.ExecuteNonQuery();
@@ -79,11 +81,20 @@ namespace WPFSafe
                     MessageBox.Show(ex.Message);
                 }
             }
+            //----Closes DataEditWindow and will call DataEditWindow_Closed method---
             Close();
-
-            MessageBox.Show("This is a test");
         }
 
+        //----This will update the MainWindow data text box with the newly saved data (without querying the db)----
+        private void DataEditWindow_Closed(object sender, EventArgs e)
+        {
+            MainWindow mainWindow = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+            if(mainWindow != null)
+            {
+                string data = StringFromRichTextBox(contentTextBox);
+                mainWindow.UpdateFrom_DataEditWindow(data);
+            }
+        }
 
         public string StringFromRichTextBox(RichTextBox rtb)
         {
