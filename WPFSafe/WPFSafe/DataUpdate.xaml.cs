@@ -66,9 +66,11 @@ namespace WPFSafe
             {
                 try
                 {
+                    
+                    SQLiteCommand cmd = new SQLiteCommand(con.myConnection);
+                    cmd.CommandText = "UPDATE customers SET data = @data WHERE name='" + myString + "' ";
+                    cmd.Parameters.AddWithValue("@data", data);
                     con.OpenConnection();
-                    string query = "UPDATE customers SET data ='" + data + "' WHERE name='" + myString + "' ";
-                    SQLiteCommand cmd = new SQLiteCommand(query, con.myConnection);
                     cmd.ExecuteNonQuery();
                     con.CloseConnection();
                 }
