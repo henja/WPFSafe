@@ -85,7 +85,7 @@ namespace WPFSafe
                     DataTable dt = new DataTable("misc");
                     dataAdp.Fill(dt);
                     MiscDataGrid.ItemsSource = dt.DefaultView;
-                    dataAdp.Update(dt);
+                    //dataAdp.Update(dt);
                 }
                 //----Close db connection----
                 sqliteCon.CloseConnection();
@@ -130,15 +130,10 @@ namespace WPFSafe
         //-----loads the editing window after double clicking on a listbox selection-----
         private void CustomerListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            bool isOpen = false;
-            if (isOpen == false)
-            {
-                string customerData = StringFromRichTextBox(contentTextBox);
-                string customerName = (string)CustomerListBox.SelectedItem;
-                DataEditWindow nw = new DataEditWindow(customerData, customerName);
-                nw.Show();
-                isOpen = true;
-            }
+            string customerData = StringFromRichTextBox(contentTextBox);
+            string customerName = (string)CustomerListBox.SelectedItem;
+            DataEditWindow nw = new DataEditWindow(customerData, customerName);
+            nw.Show();
         }
 
 

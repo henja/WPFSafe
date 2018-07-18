@@ -27,7 +27,7 @@ namespace WPFSafe
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-
+            
             Database sqliteCon = new Database();
             //string dataQuery = "Select * FROM customers where name='" + myString + "' ";
             string customerID = "SELECT cust_id from customers where name='" + custName + "' ";
@@ -39,6 +39,7 @@ namespace WPFSafe
 
                 SQLiteCommand custIDCommand = new SQLiteCommand(customerID, sqliteCon.myConnection);
                 SQLiteDataReader custDR = custIDCommand.ExecuteReader();
+               
 
                 //----Load customer's misc data into Misc tab's datagrid based on listbox selection----
                 while (custDR.Read())
@@ -58,13 +59,14 @@ namespace WPFSafe
             {
                 MessageBox.Show(ex.Message);
             }
+            
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             string data = StringFromRichTextBox(contentTextBox);
             Database con = new Database();
-
+            
             {
                 try
                 {
